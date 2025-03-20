@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        /* Body Styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ff9a9e, #fecfef); /* Pink Gradient */
+          
+            font-family: Arial, sans-serif;
+        }
+
+        /* Form Container */
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+
+        /* Labels */
+        label {
+            display: block;
+            text-align: left;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Input Fields */
+        input {
+            width: 92%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* Error Highlight */
+        .error {
+            border: 2px solid red;
+        }
+
+        /* Login Button */
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            background: #6a11cb;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #5a0fb0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 400px) {
+            .form-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Form Container -->
+    <div id="login-container"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const container = document.getElementById("login-container");
+
+            // Create form dynamically
+            const form = document.createElement("form");
+            form.classList.add("form-container");
+
+            const heading = document.createElement("h2");
+            heading.innerText = "Login";
+
+            const emailLabel = document.createElement("label");
+            emailLabel.innerText = "Email:";
+
+            const emailInput = document.createElement("input");
+            emailInput.setAttribute("type", "email");
+            emailInput.setAttribute("placeholder", "Enter your email");
+            emailInput.required = true;
+
+            const passwordLabel = document.createElement("label");
+            passwordLabel.innerText = "Password:";
+
+            const passwordInput = document.createElement("input");
+            passwordInput.setAttribute("type", "password");
+            passwordInput.setAttribute("placeholder", "Enter your password");
+            passwordInput.required = true;
+
+            const loginButton = document.createElement("button");
+            loginButton.innerText = "Login";
+
+            // Event Listener for Validation
+            loginButton.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent form submission
+
+                // Reset error styling
+                emailInput.classList.remove("error");
+                passwordInput.classList.remove("error");
+
+                if (emailInput.value === "" || passwordInput.value === "") {
+                    alert("All fields are required!");
+                    if (emailInput.value === "") emailInput.classList.add("error");
+                    if (passwordInput.value === "") passwordInput.classList.add("error");
+                } else if (!validateEmail(emailInput.value)) {
+                    alert("Invalid email format!");
+                    emailInput.classList.add("error");
+                } else if (passwordInput.value.length < 6) {
+                    alert("Password must be at least 6 characters long!");
+                    passwordInput.classList.add("error");
+                } else {
+                    // Redirect to success page
+                    window.location.href = "success.html";
+                }
+            });
+
+            // Email Validation Function
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            // Append elements to form
+            form.appendChild(heading);
+            form.appendChild(emailLabel);
+            form.appendChild(emailInput);
+            form.appendChild(passwordLabel);
+            form.appendChild(passwordInput);
+            form.appendChild(loginButton);
+
+            // Append form to container
+            container.appendChild(form);
+        });
+    </script>
+
+</body>
+</html>
